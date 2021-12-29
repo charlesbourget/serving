@@ -10,8 +10,8 @@ go build .
 
 ## Options
 
-| Params | Description                                               |
-|--------|-----------------------------------------------------------|
-| -p     | Port to serve on (Default: 8100)                          |
-| -d     | The directory of static file to host (Default: .)         |
-| -f     | Format to use. Either plain, json or xml (Default: plain) |
+| Params | Description                             | Default |
+|--------|-----------------------------------------|---------|
+| -p     | Port to serve on                        | 8100    |
+| -d     | The directory of static file to host    | .       |
+| -f     | Format to use. Either html, json or xml | html    |

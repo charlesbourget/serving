@@ -13,11 +13,11 @@ var format *string
 func main() {
 	port := flag.String("p", "8100", "Port to serve on")
 	dir = flag.String("d", ".", "The directory of static file to host")
-	format = flag.String("f", "plain", "Format to use. Either plain or json")
+	format = flag.String("f", "html", "Format to use. Either html, json or xml")
 	flag.Parse()
 
 	switch *format {
-	case "plain":
+	case "html":
 		http.Handle("/", http.FileServer(http.Dir(*dir)))
 	case "json", "xml":
 		http.HandleFunc("/", fileServer)
