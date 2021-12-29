@@ -12,6 +12,7 @@ import (
 )
 
 func fileServer(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
 	path := fmt.Sprintf("%s%s", *dir, r.URL.Path)
 
 	isFile, err := checkIfFile(path)
@@ -99,4 +100,8 @@ func handleHttpError(status int, message string, w http.ResponseWriter) {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 }
