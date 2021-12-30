@@ -2,12 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <script src="index.ts"></script>
+    <link rel="shortcut icon" href="./assets/favicon.ico" />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./index.ts" type="module"></script>
+
     <title id="title">Title</title>
   </head>
   <body>
-    <button id="goUp">Go up</button>
-    <ul id="directories"></ul>
-    <ul id="files"></ul>
+    <div class="container">
+      <div class="row topbar">
+        <div class="navigation">
+          <button id="goUp" class="button">Go up</button>
+        </div>
+        <span id="path">/</span>
+      </div>
+      <div id="directories" class="list"></div>
+      <div id="files" class="list"></div>
+    </div>
   </body>
 </html>
