@@ -20,7 +20,8 @@ func main() {
 	case "html":
 		http.Handle("/", http.FileServer(http.Dir(*dir)))
 	case "json", "xml":
-		http.HandleFunc("/", fileServer)
+		http.HandleFunc("/api/", fileServer)
+		http.Handle("/", http.FileServer(http.Dir("./web/prod")))
 	default:
 		log.Fatal("Format not supported...")
 	}

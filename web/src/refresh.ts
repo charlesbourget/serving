@@ -57,16 +57,27 @@ function cleanList(list: HTMLElement) {
 }
 
 async function fetchDir(path: string) {
-    const url = "http://localhost:8100" + path;
-    const response = await fetch(url);
-    if (response.status == 200) {
-        const body = await response.text();
-        return await JSON.parse(body);
+    const url = "http://localhost:8100/api" + path;
+    
+    try {
+        const response = await fetch(url)
+    
+        if (response.status == 200) {
+            const body = await response.text();
+            return await JSON.parse(body);
+        } else {
+            console.log(response.status)
+            console.log("Error while fetching ressource")
+        }
+    } catch(error) {
+        console.log(error)
     }
+    return {}
 }
 
 export async function refresh() {
     document.getElementById("title").textContent = currentPath;
+    document.getElementById("path").textContent = currentPath;
     const response = await fetchDir(currentPath);
 
     createDirectoriesList(response.directories);

@@ -13,7 +13,7 @@ import (
 
 func fileServer(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
-	path := fmt.Sprintf("%s%s", *dir, r.URL.Path)
+	path := fmt.Sprintf("%s%s", *dir, strings.TrimPrefix(r.URL.Path, "/api"))
 
 	isFile, err := checkIfFile(path)
 	if err != nil {

@@ -1,7 +1,7 @@
 import { refresh } from './refresh'
 import { previousDirectory } from './navigation';
 
-export let currentPath = "/.git";
+export let currentPath = "";
 
 function main() {
   refresh();
