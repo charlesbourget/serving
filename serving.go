@@ -1,11 +1,15 @@
 package main
 
 import (
+	"embed"
 	"flag"
 	"fmt"
 	"log"
 	"net/http"
 )
+
+//go:embed static
+var static embed.FS
 
 var dir *string
 var format *string
@@ -21,7 +25,7 @@ func main() {
 		http.Handle("/", http.FileServer(http.Dir(*dir)))
 	case "json", "xml":
 		http.HandleFunc("/api/", fileServer)
-		http.Handle("/", http.FileServer(http.Dir("./web/prod")))
+		http.Handle("/", http.FileServer(http.FS(static)))
 	default:
 		log.Fatal("Format not supported...")
 	}
