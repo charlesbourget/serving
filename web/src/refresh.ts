@@ -57,7 +57,7 @@ function cleanList(list: HTMLElement) {
 }
 
 async function fetchDir(path: string) {
-    const url = "http://localhost:8100/api" + path;
+    const url = `http://${window.location.hostname}:8100/api${path}`
     
     try {
         const response = await fetch(url)
