@@ -11,6 +11,7 @@ function createDirectoriesList(directories: Array<object>) {
     directories.forEach((directory) => {
         const node = document.createElement("div");
         const img = document.createElement('img');
+        // @ts-ignore
         img.src = new URL('assets/directory.png?as=png&width=20&heigth=20', import.meta.url)
         node.appendChild(img)
         const element = document.createElement("a");
@@ -34,6 +35,7 @@ function createFilesList(files: Array<object>) {
     files.forEach((file) => {
         const node = document.createElement("div");
         const img = document.createElement('img');
+        // @ts-ignore
         img.src = new URL('assets/file.png?as=png&width=20&heigth=20', import.meta.url)
         node.appendChild(img)
 
