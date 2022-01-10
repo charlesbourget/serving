@@ -6,10 +6,11 @@ type content struct {
 }
 
 type file struct {
-	Name string `json:"name" xml:"name"`
-	Size int    `json:"size" xml:"size"`
-	Mode string `json:"mode" xml:"mode"`
-	Link string `json:"link"  xml:"link"`
+	Name   string `json:"name" xml:"name"`
+	Size   int    `json:"size" xml:"size"`
+	Mode   string `json:"mode" xml:"mode"`
+	Link   string `json:"link"  xml:"link"`
+	IsText bool   `json:"isText" xml:"isText"`
 }
 
 type directory struct {

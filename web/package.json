@@ -4,14 +4,19 @@
   "license": "MIT",
   "scripts": {
     "dev": "parcel src/index.html",
-    "build": "rm -rf prod/ && parcel build src/index.html --dist-dir prod --public-url ./",
-    "serve": "http-server prod/ --cors"
+    "build": "rm -rf prod/ && parcel build src/*.html --dist-dir prod --public-url ./",
+    "serve": "http-server prod/ --cors",
+    "format": "prettier -w src/scripts src/styles src/*.html"
   },
-  "dependencies": {},
+  "dependencies": {
+    "highlight.js": "^11.4.0"
+  },
   "devDependencies": {
+    "@parcel/transformer-sass": "^2.0.1",
     "http-server": "^14.0.0",
     "parcel": "^2.0.1",
     "sharp": "^0.29.1",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.4",
+    "prettier": "^2.5.1"
   }
 }

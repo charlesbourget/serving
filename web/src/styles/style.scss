@@ -1,0 +1,71 @@
+.topbar {
+  background-color: #333;
+  overflow: hidden;
+  margin: 10px 10px 10px 10px;
+  border-radius: 5px;
+  .navigation {
+    float: left;
+    text-align: center;
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 17px;
+    button {
+      background-color: #4caf50;
+      border: none;
+      color: white;
+      padding: 10px 25px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  }
+  span {
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    padding: 15px 25px;
+  }
+}
+
+.list {
+  margin: 10px 10px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  div {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    justify-self: auto;
+    margin-right: auto;
+    a {
+      border: none;
+      padding: 2px;
+      text-align: left;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+      color: black;
+      width: 150px;
+    }
+    span {
+      border: none;
+      padding: 2px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+      color: black;
+    }
+    img {
+      cursor: pointer;
+      margin: 2px;
+    }
+  }
+}

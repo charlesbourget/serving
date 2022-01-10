@@ -4,12 +4,17 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"fmt"
+	"io"
 	"log"
+	"mime"
 	"net"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strings"
 )
+
+const sniffLen = 512
 
 func fileServer(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
@@ -60,11 +65,16 @@ func serveDir(w http.ResponseWriter, r *http.Request, path string) {
 				fmt.Sprintf("http://%s%s/%s", srvAddr, strings.TrimSuffix(r.URL.Path, "/"), f.Name()),
 			})
 		} else {
+			isTextFile := false
+			if strings.Contains(findFileType(f.Name()), "text/plain") {
+				isTextFile = true
+			}
 			dirContent.Files = append(dirContent.Files, file{
 				f.Name(),
 				int(info.Size()),
 				info.Mode().String(),
 				fmt.Sprintf("http://%s%s/%s", srvAddr, strings.TrimSuffix(r.URL.Path, "/"), f.Name()),
+				isTextFile,
 			})
 		}
 	}
@@ -104,4 +114,22 @@ func handleHttpError(status int, message string, w http.ResponseWriter) {
 
 func enableCors(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+}
+
+func findFileType(name string) (ctype string) {
+	file, err := os.Open(name)
+	if err != nil {
+		panic(err.Error())
+	}
+	defer file.Close()
+
+	ctype = mime.TypeByExtension(filepath.Ext(name))
+	if ctype == "" {
+		// read a chunk to decide between utf-8 text and binary
+		var buf [sniffLen]byte
+		n, _ := io.ReadFull(file, buf[:])
+		ctype = http.DetectContentType(buf[:n])
+	}
+
+	return
 }
