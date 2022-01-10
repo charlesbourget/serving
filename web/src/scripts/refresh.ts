@@ -14,6 +14,7 @@ function createDirectoriesList(directories: Array<object>) {
     // @ts-ignore
     img.src = new URL(
       "../assets/directory.png?as=png&width=20&heigth=20",
+      // @ts-ignore
       import.meta.url
     );
     node.appendChild(img);
@@ -41,6 +42,7 @@ function createFilesList(files: Array<object>) {
     // @ts-ignore
     img.src = new URL(
       "../assets/file.png?as=png&width=20&heigth=20",
+      // @ts-ignore
       import.meta.url
     );
     node.appendChild(img);
