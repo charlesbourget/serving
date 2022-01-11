@@ -6,11 +6,10 @@ import (
 	"fmt"
 	"io"
 	"log"
-	"mime"
 	"net"
 	"net/http"
 	"os"
-	"path/filepath"
+	"path"
 	"strings"
 )
 
@@ -18,7 +17,7 @@ const sniffLen = 512
 
 func fileServer(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
-	path := fmt.Sprintf("%s%s", *dir, strings.TrimPrefix(r.URL.Path, "/api"))
+	path := path.Join(*dir, strings.TrimPrefix(r.URL.Path, "/api"))
 
 	isFile, err := checkIfFile(path)
 	if err != nil {
@@ -42,10 +41,10 @@ func checkIfFile(path string) (bool, error) {
 	return !fileInfo.IsDir(), nil
 }
 
-func serveDir(w http.ResponseWriter, r *http.Request, path string) {
+func serveDir(w http.ResponseWriter, r *http.Request, basePath string) {
 	srvAddr := r.Context().Value(http.LocalAddrContextKey).(net.Addr)
 
-	files, err := os.ReadDir(path)
+	files, err := os.ReadDir(basePath)
 	if err != nil {
 		handleHttpError(http.StatusNotFound, "Directory not found", w)
 		return
@@ -66,7 +65,7 @@ func serveDir(w http.ResponseWriter, r *http.Request, path string) {
 			})
 		} else {
 			isTextFile := false
-			if strings.Contains(findFileType(f.Name()), "text/plain") {
+			if strings.Contains(findFileType(path.Join(basePath, f.Name())), "text/plain") {
 				isTextFile = true
 			}
 			dirContent.Files = append(dirContent.Files, file{
@@ -119,17 +118,15 @@ func enableCors(w *http.ResponseWriter) {
 func findFileType(name string) (ctype string) {
 	file, err := os.Open(name)
 	if err != nil {
-		panic(err.Error())
+		fmt.Println(err)
+		return
 	}
 	defer file.Close()
 
-	ctype = mime.TypeByExtension(filepath.Ext(name))
-	if ctype == "" {
-		// read a chunk to decide between utf-8 text and binary
-		var buf [sniffLen]byte
-		n, _ := io.ReadFull(file, buf[:])
-		ctype = http.DetectContentType(buf[:n])
-	}
+	// read a chunk to decide between utf-8 text and binary
+	var buf [sniffLen]byte
+	n, _ := io.ReadFull(file, buf[:])
+	ctype = http.DetectContentType(buf[:n])
 
 	return
 }
